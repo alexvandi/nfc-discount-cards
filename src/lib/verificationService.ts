@@ -1,47 +1,74 @@
-export interface CardInfo {
-    id: string;
-    merchantName: string;
-    discount: string;
-    expiryDate: string;
+import { supabase } from './supabaseClient';
+import { DiscountCard } from '@/types/database';
+
+export interface CardInfo extends DiscountCard {
     isValid: boolean;
     status: 'active' | 'expired' | 'revoked' | 'not_found';
 }
 
-const MOCK_CARDS: Record<string, CardInfo> = {
-    'VALID123': {
-        id: 'VALID123',
-        merchantName: 'Pizzeria da Mario',
-        discount: '20% OFF',
-        expiryDate: '2026-12-31',
-        isValid: true,
-        status: 'active'
-    },
-    'EXPIRED456': {
-        id: 'EXPIRED456',
-        merchantName: 'Caffè Moderno',
-        discount: '10% OFF',
-        expiryDate: '2024-01-15',
-        isValid: false,
-        status: 'expired'
-    }
-};
-
 export async function verifyCard(id: string): Promise<CardInfo> {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    const { data, error } = await supabase
+        .from('cards')
+        .select('*')
+        .eq('id', id)
+        .single();
 
-    const card = MOCK_CARDS[id];
-
-    if (!card) {
+    if (error || !data) {
         return {
-            id,
-            merchantName: 'Sconosciuto',
-            discount: 'Nessuno',
-            expiryDate: '-',
+            nome: 'Sconosciuto',
+            cognome: '',
+            email: '',
+            telefono: '',
+            link_tessera: '',
             isValid: false,
             status: 'not_found'
-        };
+        } as CardInfo;
     }
 
-    return card;
+    // Example logic for validity (could be expanded)
+    return {
+        ...data,
+        isValid: true,
+        status: 'active'
+    };
+}
+
+export async function getAllCards(): Promise<DiscountCard[]> {
+    const { data, error } = await supabase
+        .from('cards')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching cards:', error);
+        return [];
+    }
+
+    return data || [];
+}
+
+export async function createCard(card: Omit<DiscountCard, 'id' | 'created_at'>): Promise<DiscountCard | null> {
+    const { data, error } = await supabase
+        .from('cards')
+        .insert([card])
+        .select()
+        .single();
+
+    if (error) {
+        console.error('Error creating card:', error);
+        return null;
+    }
+
+    return data;
+}
+
+export async function deleteCard(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('cards')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error deleting card:', error);
+    }
 }
