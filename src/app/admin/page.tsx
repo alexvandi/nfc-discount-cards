@@ -12,6 +12,7 @@ import { DiscountCard } from '@/types/database';
 export default function AdminPage() {
     const [cards, setCards] = useState<DiscountCard[]>([]);
     const [copiedId, setCopiedId] = useState<string | null>(null);
+    const [successMsg, setSuccessMsg] = useState('');
 
     // Nuovi stati per i campi richiesti
     const [formData, setFormData] = useState({
@@ -42,6 +43,10 @@ export default function AdminPage() {
         if (!formData.nome || !formData.cognome || !formData.email || !formData.link_tessera) return;
 
         await createCard(formData);
+
+        setSuccessMsg('Cliente registrato con successo!');
+        setTimeout(() => setSuccessMsg(''), 3000);
+
         setFormData({
             nome: '',
             cognome: '',
@@ -88,6 +93,17 @@ export default function AdminPage() {
                     </button>
                 </div>
             </div>
+
+            {successMsg && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 flex items-center gap-2"
+                >
+                    <Check size={20} />
+                    <span>{successMsg}</span>
+                </motion.div>
+            )}
 
             <div className="glass-card p-6 space-y-6">
                 <div className="flex items-center space-x-2 text-primary border-b border-white/10 pb-4">

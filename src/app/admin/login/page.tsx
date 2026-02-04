@@ -16,7 +16,7 @@ export default function LoginPage() {
         e.preventDefault();
         // Hardcoded simple check for demo purposes
         if (password === 'admin123') {
-            Cookies.set('auth_token', 'secret-admin-token', { expires: 1 });
+            Cookies.set('auth_token', 'secret-admin-token', { expires: 1, path: '/' });
             router.push('/admin');
         } else {
             setError(true);
