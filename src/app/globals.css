@@ -1,0 +1,115 @@
+:root {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  
+  --card: 240 10% 8%;
+  --card-foreground: 0 0% 98%;
+  
+  --popover: 240 10% 4%;
+  --popover-foreground: 0 0% 98%;
+  
+  --primary: 263.4 70% 50.4%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 240 4.8% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  
+  --muted: 240 4.8% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  
+  --accent: 240 4.8% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
+  
+  --radius: 0.75rem;
+
+  /* Custom Gradients */
+  --grad-primary: linear-gradient(135deg, hsl(263.4 70% 50.4%), hsl(280 70% 50.4%));
+  --grad-success: linear-gradient(135deg, hsl(142 70% 45%), hsl(160 80% 40%));
+  --grad-error: linear-gradient(135deg, hsl(0 70% 45%), hsl(10 80% 40%));
+  
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px hsla(263, 70%, 50%, 0.3);
+}
+
+.glow-success {
+  box-shadow: 0 0 20px hsla(142, 70%, 45%, 0.3);
+}
+
+.glow-error {
+  box-shadow: 0 0 20px hsla(0, 70%, 45%, 0.3);
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: var(--grad-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: var(--grad-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
