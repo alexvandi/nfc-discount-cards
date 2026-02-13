@@ -3,7 +3,7 @@ import { DiscountCard } from '@/types/database';
 
 export interface CardInfo extends DiscountCard {
     isValid: boolean;
-    status: 'active' | 'expired' | 'revoked' | 'not_found';
+    status: 'active' | 'pending' | 'expired' | 'revoked' | 'not_found';
 }
 
 export async function verifyCard(id: string): Promise<CardInfo> {
@@ -21,15 +21,16 @@ export async function verifyCard(id: string): Promise<CardInfo> {
             telefono: '',
             link_tessera: '',
             isValid: false,
-            status: 'not_found'
+            status: 'not_found',
+            eta: null,
+            genere: null
         } as CardInfo;
     }
 
-    // Example logic for validity (could be expanded)
     return {
         ...data,
-        isValid: true,
-        status: 'active'
+        isValid: data.status === 'active',
+        status: data.status // 'active' | 'pending'
     };
 }
 
@@ -60,6 +61,46 @@ export async function createCard(card: Omit<DiscountCard, 'id' | 'created_at'>):
     }
 
     return data;
+}
+
+export async function createEmptyCards(count: number): Promise<DiscountCard[]> {
+    const emptyCards = Array(count).fill({
+        nome: null,
+        cognome: null,
+        email: null,
+        telefono: null,
+        link_tessera: null,
+        status: 'pending'
+    });
+
+    const { data, error } = await supabase
+        .from('cards')
+        .insert(emptyCards)
+        .select();
+
+    if (error) {
+        console.error('Error creating empty cards:', error);
+        return [];
+    }
+
+    return data || [];
+}
+
+export async function activateCard(id: string, details: Partial<DiscountCard>): Promise<boolean> {
+    const { error } = await supabase
+        .from('cards')
+        .update({
+            ...details,
+            status: 'active'
+        })
+        .eq('id', id);
+
+    if (error) {
+        console.error('Error activating card:', error);
+        return false;
+    }
+
+    return true;
 }
 
 export async function deleteCard(id: string): Promise<void> {

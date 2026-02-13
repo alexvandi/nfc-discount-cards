@@ -1,41 +1,41 @@
 :root {
-  --background: 240 10% 4%;
-  --foreground: 0 0% 98%;
+  --background: 0 0% 0%;
+  /* Pure Black */
+  --foreground: 0 0% 100%;
+  /* Pure White */
 
-  --card: 240 10% 8%;
-  --card-foreground: 0 0% 98%;
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 100%;
 
-  --popover: 240 10% 4%;
-  --popover-foreground: 0 0% 98%;
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
 
-  --primary: 263.4 70% 50.4%;
-  --primary-foreground: 210 40% 98%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
 
-  --secondary: 240 4.8% 15.9%;
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
 
-  --muted: 240 4.8% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 60%;
 
-  --accent: 240 4.8% 15.9%;
-  --accent-foreground: 0 0% 98%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
 
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --border: 0 0% 100%;
+  /* White borders */
+  --input: 0 0% 100%;
+  --ring: 0 0% 100%;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
+  /* Slightly rounded, similar to reference */
 
-  /* Custom Gradients */
-  --grad-primary: linear-gradient(135deg, hsl(263.4 70% 50.4%), hsl(280 70% 50.4%));
-  --grad-success: linear-gradient(135deg, hsl(142 70% 45%), hsl(160 80% 40%));
-  --grad-error: linear-gradient(135deg, hsl(0 70% 45%), hsl(10 80% 40%));
-
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* No gradients - Flat High Contrast */
+  --grad-primary: #FFFFFF;
+  --grad-glass: transparent;
 }
 
 * {
@@ -47,57 +47,63 @@
 }
 
 body {
-  background:
-    radial-gradient(circle at 50% 0%, hsl(263, 70%, 15%), transparent 60%),
-    radial-gradient(circle at 0% 50%, hsl(280, 50%, 10%), transparent 50%),
-    hsl(var(--background));
-  background-attachment: fixed;
-  color: hsl(var(--foreground));
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  /* Ensure bold font usage */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.glass-card {
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* Reference Style Utilities */
+.input-outline {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 100%;
 }
 
-.glow-primary {
-  box-shadow: 0 0 20px hsla(263, 70%, 50%, 0.3);
-}
-
-.glow-success {
-  box-shadow: 0 0 20px hsla(142, 70%, 45%, 0.3);
-}
-
-.glow-error {
-  box-shadow: 0 0 20px hsla(0, 70%, 45%, 0.3);
+.input-outline:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white;
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary {
-  background: var(--grad-primary);
-  color: white;
+  background: white;
+  color: black;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  background: #e5e5e5;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: black;
 }
 
 .container {

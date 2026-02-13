@@ -27,41 +27,41 @@ export default function CardDetails({ card }: CardProps) {
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className={`glass-card ${isSuccess ? 'glow-success' : 'glow-error'} p-8 w-full max-w-md mx-auto relative overflow-hidden`}
+            className={`relative w-full max-w-md mx-auto overflow-hidden bg-black border border-white/20 text-white`}
         >
-            {/* Background patterns */}
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+            {/* Geometric Accents */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-none rotate-45 transform translate-x-16 -translate-y-16" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-none rotate-45 transform -translate-x-12 translate-y-12" />
 
-            <div className="flex flex-col items-center text-center space-y-6 relative z-10">
+            <div className="flex flex-col items-center text-center space-y-6 pt-10 pb-8 px-8 relative z-10">
                 <div className="relative">
                     {isSuccess ? (
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                            className="p-5 rounded-full bg-green-500/10 border border-green-500/20"
+                            className="p-4 bg-white text-black"
                         >
-                            <CheckCircle2 size={64} className="text-green-500" />
+                            <CheckCircle2 size={48} />
                         </motion.div>
                     ) : (
                         <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                            className="p-5 rounded-full bg-red-500/10 border border-red-500/20"
+                            className="p-4 bg-transparent border-2 border-white text-white"
                         >
-                            <XCircle size={64} className="text-red-500" />
+                            <XCircle size={48} />
                         </motion.div>
                     )}
                 </div>
 
                 <div className="space-y-2">
-                    <h2 className={`text-3xl font-bold ${isSuccess ? 'text-green-400' : 'text-red-400'}`}>
-                        {isSuccess ? 'Accesso Autorizzato' : 'Accesso Negato'}
+                    <h2 className="text-2xl font-bold uppercase tracking-widest">
+                        {isSuccess ? 'ACCESSO AUTORIZZATO' : 'ACCESSO NEGATO'}
                     </h2>
-                    <p className="text-muted-foreground font-medium">
-                        {isSuccess ? 'Tessera cliente riconosciuta nel sistema.' : 'Tessera non registrata o disabilitata.'}
+                    <p className="text-sm font-mono text-gray-400">
+                        {isSuccess ? 'TESSERA VALIDA' : 'TESSERA NON RICONOSCIUTA'}
                     </p>
                 </div>
 
